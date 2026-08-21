@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>PixBox — The file manager for your photo library</title>
+<meta name="description" content="PixBox treats your photo library like a file system. Batch-select, organize, dedupe, compress, zip, and share photos & videos like files on your computer. One-time purchase — no subscription, no ads, on-device.">
+<style>
+  :root {
+    --bg: #ffffff;
+    --bg-soft: #f5f5f7;
+    --ink: #1d1d1f;
+    --ink-2: #6e6e73;
+    --accent: #5856d6;
+    --accent-soft: #eaeafb;
+    --border: #d2d2d7;
+    --radius: 20px;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", system-ui, sans-serif;
+    color: var(--ink);
+    background: var(--bg);
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+  a { color: var(--accent); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+  .wrap { max-width: 1080px; margin: 0 auto; padding: 0 24px; }
+
+  /* ── Header ── */
+  header {
+    position: sticky; top: 0; z-index: 10;
+    background: rgba(255,255,255,0.82);
+    backdrop-filter: saturate(180%) blur(20px);
+    border-bottom: 1px solid var(--border);
+  }
+  .nav {
+    display: flex; align-items: center; justify-content: space-between;
+    height: 56px;
+  }
+  .brand { display: flex; align-items: center; gap: 10px; font-weight: 600; font-size: 17px; color: var(--ink); }
+  .brand img { width: 28px; height: 28px; border-radius: 7px; }
+  .nav-links { display: flex; gap: 28px; font-size: 14px; color: var(--ink-2); }
+  .nav-links a { color: var(--ink-2); }
+  .nav-cta {
+    display: inline-block; background: var(--accent); color: #fff;
+    padding: 7px 16px; border-radius: 980px; font-size: 14px; font-weight: 500;
+  }
+  .nav-cta:hover { text-decoration: none; opacity: 0.92; }
+
+  /* ── Hero ── */
+  .hero { text-align: center; padding: 88px 0 64px; }
+  .badge {
+    display: inline-block; font-size: 13px; font-weight: 500;
+    color: var(--accent); background: var(--accent-soft);
+    padding: 6px 14px; border-radius: 980px; margin-bottom: 24px;
+  }
+  .hero h1 {
+    font-size: clamp(40px, 7vw, 64px);
+    line-height: 1.08; letter-spacing: -0.02em; font-weight: 700;
+    max-width: 760px; margin: 0 auto 20px;
+  }
+  .hero .sub {
+    font-size: 19px; color: var(--ink-2); max-width: 640px; margin: 0 auto 28px;
+  }
+  .trust {
+    display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; margin-bottom: 36px;
+  }
+  .trust span {
+    font-size: 13px; font-weight: 500; color: var(--ink-2);
+    border: 1px solid var(--border); border-radius: 980px; padding: 6px 14px;
+  }
+  .hero-cta { display: flex; align-items: center; justify-content: center; gap: 18px; flex-wrap: wrap; }
+  .btn-primary {
+    display: inline-block; background: var(--accent); color: #fff;
+    font-size: 17px; font-weight: 500; padding: 13px 30px; border-radius: 980px;
+  }
+  .btn-primary:hover { text-decoration: none; opacity: 0.92; }
+  .price { font-size: 15px; color: var(--ink-2); }
+
+  /* ── Section scaffolding ── */
+  section { padding: 72px 0; }
+  section.soft { background: var(--bg-soft); }
+  .sec-head { text-align: center; max-width: 680px; margin: 0 auto 48px; }
+  .sec-head h2 {
+    font-size: clamp(30px, 4.5vw, 42px); letter-spacing: -0.02em; font-weight: 700; margin-bottom: 14px;
+  }
+  .sec-head p { font-size: 17px; color: var(--ink-2); }
+
+  /* ── Videos ── */
+  .videos-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 40px;
+  }
+  .video-card { display: flex; flex-direction: column; }
+  .video-card video {
+    width: 100%; height: auto; display: block;
+    border-radius: var(--radius); background: #000;
+    box-shadow: 0 8px 30px rgba(0,0,0,0.12);
+    aspect-ratio: 9 / 19.5;
+    object-fit: cover;
+  }
+  .video-card h3 { font-size: 17px; font-weight: 600; margin: 18px 0 8px; }
+  .video-card p { font-size: 14px; color: var(--ink-2); }
+
+  /* ── Pillars ── */
+  .pillars { display: grid; grid-template-columns: repeat(3, 1fr); gap: 40px; }
+  .pillar h3 { font-size: 21px; font-weight: 600; margin-bottom: 10px; }
+  .pillar h3 .n { color: var(--accent); font-weight: 700; margin-right: 8px; }
+  .pillar p { font-size: 15px; color: var(--ink-2); }
+
+  /* ── Features grid ── */
+  .features { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+  .feature {
+    background: var(--bg); border: 1px solid var(--border); border-radius: var(--radius);
+    padding: 22px 20px;
+  }
+  .feature h4 { font-size: 15px; font-weight: 600; margin-bottom: 6px; }
+  .feature p { font-size: 13px; color: var(--ink-2); }
+
+  /* ── Promise / pricing ── */
+  .promise {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: center;
+  }
+  .promise h2 { font-size: clamp(28px, 4vw, 38px); letter-spacing: -0.02em; font-weight: 700; margin-bottom: 20px; }
+  .promise ul { list-style: none; }
+  .promise li {
+    font-size: 17px; padding: 12px 0; border-bottom: 1px solid var(--border);
+    display: flex; align-items: center; gap: 12px;
+  }
+  .promise li::before { content: "✓"; color: var(--accent); font-weight: 700; }
+  .price-card {
+    background: #fff; border: 1px solid var(--border); border-radius: 24px;
+    padding: 36px 32px; box-shadow: 0 12px 40px rgba(0,0,0,0.06);
+  }
+  .price-card .amount { font-size: 52px; font-weight: 700; letter-spacing: -0.03em; }
+  .price-card .amount small { font-size: 20px; font-weight: 500; color: var(--ink-2); }
+  .price-card .once { font-size: 15px; color: var(--ink-2); margin: 4px 0 20px; }
+  .price-card .btn-primary { width: 100%; text-align: center; }
+
+  /* ── Footer ── */
+  footer { border-top: 1px solid var(--border); padding: 40px 0 56px; }
+  .footer-grid { display: flex; flex-wrap: wrap; gap: 24px; align-items: center; justify-content: space-between; }
+  .footer-links { display: flex; gap: 24px; font-size: 13px; }
+  .footer-links a { color: var(--ink-2); }
+  .footer-copy { font-size: 13px; color: var(--ink-2); }
+
+  /* ── Responsive ── */
+  @media (max-width: 860px) {
+    .videos-grid { grid-template-columns: 1fr; gap: 48px; }
+    .video-card { max-width: 360px; margin: 0 auto; }
+    .pillars { grid-template-columns: 1fr; gap: 32px; }
+    .features { grid-template-columns: repeat(2, 1fr); }
+    .promise { grid-template-columns: 1fr; }
+    .nav-links { display: none; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap nav">
+    <a class="brand" href="#"><img src="icon.png" alt="PixBox icon">PixBox</a>
+    <nav class="nav-links">
+      <a href="#videos">Videos</a>
+      <a href="#features">Features</a>
+      <a href="#pricing">Pricing</a>
+    </nav>
+    <a class="nav-cta" href="#pricing">Get PixBox</a>
+  </div>
+</header>
+
+<main>
+  <!-- Hero -->
+  <section class="hero wrap">
+    <span class="badge">Coming soon to the App Store</span>
+    <h1>The file manager for your photo library</h1>
+    <p class="sub">Batch-select, organize, dedupe, compress, zip, and share your photos &amp; videos — like files on your computer, not a gallery to swipe through.</p>
+    <div class="trust">
+      <span>One-time purchase</span>
+      <span>No subscription</span>
+      <span>No ads</span>
+      <span>On-device &amp; private</span>
+    </div>
+    <div class="hero-cta">
+      <a class="btn-primary" href="#pricing">Get PixBox</a>
+      <span class="price">$4.98 · own it forever</span>
+    </div>
+  </section>
+
+  <!-- Videos -->
+  <section class="soft" id="videos">
+    <div class="wrap">
+      <div class="sec-head">
+        <h2>See it in action</h2>
+        <p>Three core workflows, recorded on-device. Every action is batch-first — no one-by-one swiping.</p>
+      </div>
+      <div class="videos-grid">
+        <figure class="video-card">
+          <video poster="posters/organize.jpg" muted loop playsinline autoplay>
+            <source src="videos/organize.mp4" type="video/mp4">
+          </video>
+          <h3>How to Organize Photos with PixBox</h3>
+          <p>Select a batch, cut, create a folder, paste — organize your library exactly like files on your Mac.</p>
+        </figure>
+        <figure class="video-card">
+          <video poster="posters/ai-tagging.jpg" muted loop playsinline autoplay>
+            <source src="videos/ai-tagging.mp4" type="video/mp4">
+          </video>
+          <h3>AI-Powered Smart Tagging, Duplicate Detection &amp; Face Classification</h3>
+          <p>PixBox tags your photos and groups faces into people — on-device. Filter by tag or person to find any shot in seconds.</p>
+        </figure>
+        <figure class="video-card">
+          <video poster="posters/resize-zip-share.jpg" muted loop playsinline autoplay>
+            <source src="videos/resize-zip-share.mp4" type="video/mp4">
+          </video>
+          <h3>Resize, Zip &amp; Share Photos in Batches or Entire Folders — All in One Go</h3>
+          <p>Resize, zip, and share a batch — or an entire folder with its subfolders — in one go. The zip is created on the fly and cleaned up after.</p>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <!-- Pillars -->
+  <section id="features">
+    <div class="wrap">
+      <div class="sec-head">
+        <h2>Not another AI gallery</h2>
+        <p>Photo cleaners make you judge one photo at a time. PixBox gives you back control.</p>
+      </div>
+      <div class="pillars">
+        <div class="pillar">
+          <h3><span class="n">1</span>Batch, not one-by-one</h3>
+          <p>Multi-select on a thumbnail grid and act on hundreds at once — delete, move, tag, compress, or share in a single step.</p>
+        </div>
+        <div class="pillar">
+          <h3><span class="n">2</span>Real folders, like Finder</h3>
+          <p>Nest folders inside folders, cut/copy/paste between them, and zip — or share — a folder with its structure intact.</p>
+        </div>
+        <div class="pillar">
+          <h3><span class="n">3</span>Buy once, own it</h3>
+          <p>One-time purchase. No subscription, no ads, no data selling, no tracking. Everything runs on-device.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Features -->
+  <section class="soft">
+    <div class="wrap">
+      <div class="sec-head">
+        <h2>Everything a photo library needs</h2>
+      </div>
+      <div class="features">
+        <div class="feature"><h4>Duplicate detection</h4><p>Find near-identical photos, keep the best automatically.</p></div>
+        <div class="feature"><h4>Batch compression</h4><p>Resize and re-encode to reclaim gigabytes.</p></div>
+        <div class="feature"><h4>Batch zip &amp; share</h4><p>Package a shoot, trip, or project into one file.</p></div>
+        <div class="feature"><h4>Share a folder</h4><p>Resize then zip a whole folder, subfolders kept.</p></div>
+        <div class="feature"><h4>Face grouping</h4><p>Auto-cluster faces into people.</p></div>
+        <div class="feature"><h4>Scene tags</h4><p>Indoor, outdoor, food, document, and more.</p></div>
+        <div class="feature"><h4>Location browsing</h4><p>Browse by country, state, city.</p></div>
+        <div class="feature"><h4>Import &amp; export</h4><p>Back up your library metadata.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Promise / pricing -->
+  <section id="pricing">
+    <div class="wrap promise">
+      <div>
+        <h2>The PixBox promise</h2>
+        <ul>
+          <li>One-time purchase — less than one week of what subscription cleaners charge</li>
+          <li>No subscription, no ads, no data selling, no tracking</li>
+          <li>No account — we don't ask your name, age, or gender</li>
+          <li>Fully offline and private — photos never leave your device</li>
+          <li>You approve every delete — nothing is ever auto-deleted</li>
+        </ul>
+      </div>
+      <div class="price-card">
+        <div class="amount">$4.98 <small>one-time</small></div>
+        <div class="once">Own it forever. No subscription. No ads.</div>
+        <a class="btn-primary" href="#">Coming soon on the App Store</a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap footer-grid">
+    <div class="brand"><img src="icon.png" alt="">PixBox</div>
+    <div class="footer-links">
+      <a href="privacy.html">Privacy Policy</a>
+      <a href="terms.html">Terms of Use</a>
+      <a href="support.html">Support</a>
+    </div>
+    <div class="footer-copy">© 2026 StellarSea · PixBox — the file manager for your photo library.</div>
+  </div>
+</footer>
+
+</body>
+</html>
