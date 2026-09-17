@@ -178,7 +178,7 @@
 <main>
   <!-- Hero -->
   <section class="hero wrap">
-    <span class="badge">Coming soon to the App Store</span>
+    <span class="badge">Now on the App Store</span>
     <h1>The file manager for your photo library</h1>
     <p class="sub">Batch-select, organize, dedupe, compress, zip, and share your photos &amp; videos — like files on your computer, not a gallery to swipe through.</p>
     <div class="trust">
@@ -188,8 +188,7 @@
       <span>On-device &amp; private</span>
     </div>
     <div class="hero-cta">
-      <a class="btn-primary" href="#pricing">Get PixBox</a>
-      <span class="price">$4.98 · own it forever</span>
+      <a class="btn-primary store-link" href="https://apps.apple.com/app/id6802656206" target="_blank" rel="noopener">Download on the App Store</a>
     </div>
   </section>
 
@@ -230,8 +229,8 @@
   <section id="features">
     <div class="wrap">
       <div class="sec-head">
-        <h2>Not another AI gallery</h2>
-        <p>Photo cleaners make you judge one photo at a time. PixBox gives you back control.</p>
+        <h2>More than an AI gallery</h2>
+        <p>AI tagging and face grouping are built in — but the real power is batch control over your whole library.</p>
       </div>
       <div class="pillars">
         <div class="pillar">
@@ -283,9 +282,8 @@
         </ul>
       </div>
       <div class="price-card">
-        <div class="amount">$4.98 <small>one-time</small></div>
         <div class="once">Own it forever. No subscription. No ads.</div>
-        <a class="btn-primary" href="#">Coming soon on the App Store</a>
+        <a class="btn-primary store-link" href="https://apps.apple.com/app/id6802656206" target="_blank" rel="noopener">Download on the App Store</a>
       </div>
     </div>
   </section>
@@ -302,6 +300,26 @@
     <div class="footer-copy">© 2026 StellarSea · PixBox — the file manager for your photo library.</div>
   </div>
 </footer>
+
+<script>
+  var STORE_CN = 'https://apps.apple.com/cn/app/pixbox-photo-file-manager/id6802656206';
+  var STORE_GLOBAL = 'https://apps.apple.com/app/id6802656206';
+  var CN_TZ = ['Asia/Shanghai','Asia/Chongqing','Asia/Harbin','Asia/Urumqi','Asia/Kashgar'];
+  function storeRegion(){
+    var tz=''; try{ tz = Intl.DateTimeFormat().resolvedOptions().timeZone || ''; }catch(e){}
+    if(CN_TZ.indexOf(tz) >= 0) return 'cn';
+    var lang = String(navigator.language || '').toLowerCase();
+    if(lang === 'zh-cn' || lang === 'zh') return 'cn';
+    if(lang.indexOf('zh') === 0) return 'global';
+    return 'global';
+  }
+  function applyStoreLink(){
+    var url = (storeRegion() === 'cn') ? STORE_CN : STORE_GLOBAL;
+    var els = document.querySelectorAll('.store-link');
+    for(var i=0;i<els.length;i++){ els[i].href = url; }
+  }
+  applyStoreLink();
+</script>
 
 </body>
 </html>
